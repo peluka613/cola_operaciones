@@ -10,27 +10,27 @@ Se espera tener mínimo tres servicios:
 *	Realizar operación: se envía la operación a realizar (suma, resta, multiplicación, división, potenciación) con el identificador que se aplicará en cadena a todos los operados previamente agregados
 
 Los servicios deben responder al siguiente flujo:
-•	El cliente llama un servicio para empezar (Nueva sesión).
-•	El cliente llama un servicio para agregar los operandos (Agregar operando), tantas veces como se quiera.
-•	El cliente llama un servicio para ejecutar una operación matemática (Realizar operación).
+*	El cliente llama un servicio para empezar (Nueva sesión).
+*	El cliente llama un servicio para agregar los operandos (Agregar operando), tantas veces como se quiera.
+*	El cliente llama un servicio para ejecutar una operación matemática (Realizar operación).
 
 Por ejemplo:
-•	Cliente ------------------> nueva operación ----------------------> servidor
-•	Cliente <------------------ id <---------------------- servidor
-•	Cliente ------------------> 2 ----------------------> servidor
-•	Cliente <------------------ ok<---------------------- servidor
-•	Cliente ------------------> 3 ----------------------> servidor
-•	Cliente <------------------ ok<---------------------- servidor
-•	Cliente ------------------> suma ----------------------> servidor
-•	Cliente <------------------ 5<---------------------- servidor
+*	Cliente ------------------> nueva operación ----------------------> servidor
+*	Cliente <------------------ id <---------------------- servidor
+*	Cliente ------------------> 2 ----------------------> servidor
+*	Cliente <------------------ ok<---------------------- servidor
+*	Cliente ------------------> 3 ----------------------> servidor
+*	Cliente <------------------ ok<---------------------- servidor
+*	Cliente ------------------> suma ----------------------> servidor
+*	Cliente <------------------ 5<---------------------- servidor
 
 
 
 ## Debe tener en cuenta que:
-•	Se pueden agregar “n” operandos antes de realizar un calculo.
-•	El resultado de un cálculo puede agregarse como operando para el siguiente calculo.
-•	El diseño de los servicios, incluyendo el manejo de errores y formato de los datos queda a discreción del desarrollador.
-•	Se debe entregar la documentación mínima para probar el funcionamiento de los servicios, algo básico para saber como hacer pruebas de que el ejercicio esta funcionando completo.
+*	Se pueden agregar “n” operandos antes de realizar un calculo.
+*	El resultado de un cálculo puede agregarse como operando para el siguiente calculo.
+*	El diseño de los servicios, incluyendo el manejo de errores y formato de los datos queda a discreción del desarrollador.
+*	Se debe entregar la documentación mínima para probar el funcionamiento de los servicios, algo básico para saber como hacer pruebas de que el ejercicio esta funcionando completo.
 
 ## Requerimientos No Funcionales
 1.	Exponer la anterior lógica de negocio como un servicio Rest.
@@ -43,7 +43,7 @@ Por ejemplo:
 
 ## Requerimientos opcionales
 Los siguientes puntos son OPCIONALES y darán puntos extra, pero si no tiene tiempo no es requerido hacerlos.
-•	Implemente una interfaz de usuario simple para ejecutar uno de los servicios y presentar en pantalla el resultado.
-•	Si lo considera conveniente puede agregar más servicios para que aplicación funcione de una mejor forma (más eficiente, usable o versátil por parte de los clientes).
-•	Implementar un sistema de logs, de forma que cuando se coloque en producción ayude a dar soporte del sistema.
-•	Llevar la auditoria en base de datos (se puede implementar en cualquier motor) de lo que sucede en cada sesión, para una posterior consulta. Se deja a discreción del desarrollador el modelo de base de datos para la auditoria. Se debe habilitar por medio de un servicio Rest la consulta de esa información suponiendo que en una iteración subsiguiente del producto se va a implementar una interfaz gráfica para hacer auditoria de las transacciones. 
+*	Implemente una interfaz de usuario simple para ejecutar uno de los servicios y presentar en pantalla el resultado.
+*	Si lo considera conveniente puede agregar más servicios para que aplicación funcione de una mejor forma (más eficiente, usable o versátil por parte de los clientes).
+*	Implementar un sistema de logs, de forma que cuando se coloque en producción ayude a dar soporte del sistema.
+*	Llevar la auditoria en base de datos (se puede implementar en cualquier motor) de lo que sucede en cada sesión, para una posterior consulta. Se deja a discreción del desarrollador el modelo de base de datos para la auditoria. Se debe habilitar por medio de un servicio Rest la consulta de esa información suponiendo que en una iteración subsiguiente del producto se va a implementar una interfaz gráfica para hacer auditoria de las transacciones. 
