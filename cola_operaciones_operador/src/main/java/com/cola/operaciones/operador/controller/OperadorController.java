@@ -1,12 +1,15 @@
 package com.cola.operaciones.operador.controller;
 
+import com.cola.operaciones.operador.exception.BadSesionIdException;
 import com.cola.operaciones.operador.model.OperandoRequestDto;
 import com.cola.operaciones.operador.model.OperandoResponseDto;
 import com.cola.operaciones.operador.model.data.Operando;
 import com.cola.operaciones.operador.service.OperandoService;
+import com.cola.operaciones.operador.service.SesionService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +28,16 @@ import java.util.stream.Collectors;
 public class OperadorController {
 
     private OperandoService operandoService;
+    private SesionService sesionService;
     private ModelMapper modelMapper;
 
+    @Value("${exception.bad.sesion.id}")
+    private String badSesionIdMessage;
+
     @Autowired
-    public OperadorController(OperandoService operandoService) {
+    public OperadorController(OperandoService operandoService, SesionService sesionService) {
         this.operandoService = operandoService;
+        this.sesionService = sesionService;
 
         modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -53,6 +61,10 @@ public class OperadorController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<OperandoResponseDto> addOperando(@Valid @RequestBody OperandoRequestDto requestDto) {
+        if (sesionService.countBySesionId(requestDto.getSesionId()) == 0){
+            throw new BadSesionIdException(badSesionIdMessage);
+        }
+
         Operando operando = modelMapper.map(requestDto, Operando.class);
         operando = operandoService.addOperando(operando);
 
