@@ -5,9 +5,9 @@
 Se debe implementar un conjunto de servicios para calcular: suma, resta, multiplicación, división y potenciación de un conjunto de números.
 
 Se espera tener mínimo tres servicios:
-•	Nueva sesión (opcional): El servidor crea un nuevo ambiente donde empezar a trabajar y retorna un identificador de este.
-•	Agregar operando: se agrega un operando con el identificador retornado por el servicio anterior.
-•	Realizar operación: se envía la operación a realizar (suma, resta, multiplicación, división, potenciación) con el identificador que se aplicará en cadena a todos los operados previamente agregados
+* Nueva sesión (opcional): El servidor crea un nuevo ambiente donde empezar a trabajar y retorna un identificador de este.
+*	Agregar operando: se agrega un operando con el identificador retornado por el servicio anterior.
+*	Realizar operación: se envía la operación a realizar (suma, resta, multiplicación, división, potenciación) con el identificador que se aplicará en cadena a todos los operados previamente agregados
 
 Los servicios deben responder al siguiente flujo:
 •	El cliente llama un servicio para empezar (Nueva sesión).
