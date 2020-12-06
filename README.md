@@ -1,6 +1,8 @@
 # cola_operaciones
+### 1.	Explicación del requerimiento
+### 2.	Explicación de los resultados
 
-## Requerimiento Funcional
+# Requerimiento Funcional
 
 Se debe implementar un conjunto de servicios para calcular: suma, resta, multiplicación, división y potenciación de un conjunto de números.
 
@@ -47,3 +49,27 @@ Los siguientes puntos son OPCIONALES y darán puntos extra, pero si no tiene tie
 *	Si lo considera conveniente puede agregar más servicios para que aplicación funcione de una mejor forma (más eficiente, usable o versátil por parte de los clientes).
 *	Implementar un sistema de logs, de forma que cuando se coloque en producción ayude a dar soporte del sistema.
 *	Llevar la auditoria en base de datos (se puede implementar en cualquier motor) de lo que sucede en cada sesión, para una posterior consulta. Se deja a discreción del desarrollador el modelo de base de datos para la auditoria. Se debe habilitar por medio de un servicio Rest la consulta de esa información suponiendo que en una iteración subsiguiente del producto se va a implementar una interfaz gráfica para hacer auditoria de las transacciones. 
+
+# Resultados
+
+Este proyecto se realizó utilizando Java 8 y Springboot 2.3.7.BUILD-SNAPSHOT con Gradle en IntelliJ Idea community 2020.3
+
+La arquitectura es basada en microservicios con Spring web que pretende ofrecer alta disponibilidad y elasticidad, expone además servicios Restful:
+* Un service discovery implementado con Eureka
+* Un api gateway implementado con Zuul el cual contiene una implementación de Ribbon load balancer
+* Un microservicio para la creación de sesiones (generar y almacenar sesionId)
+* Un microservicio para la administración de operandos y operaciones
+
+Para probar la solución los módulos deben desplegarse en el orden anteriormente descrito asegurándose de levantar el service discovery en primer lugar, este se representa en el módulo cola_operaciones_eureka. Tener también en cuenta habilitar el procesamiento de anotaciones de Lombok en el Ide de ser requerido.
+
+La persistencia se realiza mediante una base de datos H2 que se comparte para ambos microservicios alojando la base de datos en un archivo en la carpeta local del usuario del sistema operativo.
+
+En la raíz del proyecto se encuentra una colección de postman exportada en formato Collection v2.1. Se debe tener en cuenta que los servicios rest implementados pueden consumir y producir tanto JSON como XML para evitar acoplamiento y dar libertad al cliente de los servicios, pero al llamarlos se les debe indicar mediante headers los respectivos Content-Type y Accept, ya sean application/json o application/xml
+
+Gracias al api gateway, service discovery y load balancer, se pueden desplegar múltiples instancias de los microservicios y el cliente sólo requiere ingresar por el puerto 8080, los microservicios se auto-registran en el service discovery server.
+
+Las pruebas unitarias se realizaron únicamente a los microservicios utilizando JUnit 5 y Mockito
+
+## Deuda técnica
+* Pendiente despliegue en Docker
+* Pendiente pipeline de CD/CI
