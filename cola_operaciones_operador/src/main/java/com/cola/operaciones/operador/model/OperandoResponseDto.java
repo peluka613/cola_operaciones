@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OperandoResponseDto {
-    private Integer valor;
+    private Double valor;
 }

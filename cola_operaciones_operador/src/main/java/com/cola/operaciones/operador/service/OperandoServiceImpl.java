@@ -34,4 +34,9 @@ public class OperandoServiceImpl implements OperandoService {
     public List<Operando> findAllBySesionId(String sesionId) {
         return operandoRepository.findAllBySesionId(sesionId);
     }
+
+    @Override
+    public void delete(Operando operando) {
+        operandoRepository.delete(operando);
+    }
 }

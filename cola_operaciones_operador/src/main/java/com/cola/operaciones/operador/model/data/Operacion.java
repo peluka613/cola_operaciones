@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Table(name = "operandos")
-public class Operando implements Serializable {
+@Table(name = "operaciones")
+public class Operacion implements Serializable {
 
-    private static final long serialVersionUID = -8201547993903070418L;
+    private static final long serialVersionUID = 5488218850501279591L;
 
     @Id
     @GeneratedValue()
@@ -26,5 +26,14 @@ public class Operando implements Serializable {
     private String sesionId;
 
     @Column(nullable = false)
-    private Double valor;
+    private String operacion;
+
+    @Column(nullable = false)
+    private Double primerOperando;
+
+    @Column(nullable = false)
+    private Double segundoOperando;
+
+    @Column(nullable = false)
+    private Double resultado;
 }

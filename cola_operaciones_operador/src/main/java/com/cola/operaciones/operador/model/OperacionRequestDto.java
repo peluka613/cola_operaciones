@@ -7,11 +7,13 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class OperandoRequestDto {
+public class OperacionRequestDto {
 
     @NotNull
     private String sesionId;
 
     @NotNull
-    private Double valor;
+    private String operacion;
+
+    private boolean appendResult;
 }

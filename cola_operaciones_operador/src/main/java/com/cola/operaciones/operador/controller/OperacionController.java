@@ -1,9 +1,9 @@
 package com.cola.operaciones.operador.controller;
 
-import com.cola.operaciones.operador.model.OperandoRequestDto;
-import com.cola.operaciones.operador.model.OperandoResponseDto;
-import com.cola.operaciones.operador.model.data.Operando;
-import com.cola.operaciones.operador.service.OperandoService;
+import com.cola.operaciones.operador.model.OperacionRequestDto;
+import com.cola.operaciones.operador.model.OperacionResponseDto;
+import com.cola.operaciones.operador.model.data.Operacion;
+import com.cola.operaciones.operador.service.OperacionService;
 import com.cola.operaciones.operador.utils.SesionUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,16 +23,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/operando")
-public class OperadorController {
+@RequestMapping("/operacion")
+public class OperacionController {
 
-    private OperandoService operandoService;
+    private OperacionService operacionService;
     private SesionUtils sesionUtils;
     private ModelMapper modelMapper;
 
     @Autowired
-    public OperadorController(OperandoService operandoService, SesionUtils sesionUtils) {
-        this.operandoService = operandoService;
+    public OperacionController(OperacionService operacionService, SesionUtils sesionUtils) {
+        this.operacionService = operacionService;
         this.sesionUtils = sesionUtils;
 
         modelMapper = new ModelMapper();
@@ -43,34 +43,34 @@ public class OperadorController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    public ResponseEntity<List<OperandoResponseDto>> operandos(@RequestParam(required = false) String sesionId) {
-        List<Operando> operandos;
+    public ResponseEntity<List<OperacionResponseDto>> operaciones(@RequestParam(required = false) String sesionId) {
+        List<Operacion> operacions;
         if (sesionId != null) {
             sesionUtils.validateSesionId(sesionId);
-            operandos = operandoService.findAllBySesionId(sesionId);
+            operacions = operacionService.findAllBySesionId(sesionId);
         } else {
-            operandos = operandoService.findAll();
+            operacions = operacionService.findAll();
         }
 
-        List<OperandoResponseDto> responseDtos = operandos.stream().map(
-                s -> modelMapper.map(s, OperandoResponseDto.class)
+        List<OperacionResponseDto> responseDtos = operacions.stream().map(
+                s -> modelMapper.map(s, OperacionResponseDto.class)
         ).collect(Collectors.toList());
 
         return new ResponseEntity<>(responseDtos, HttpStatus.OK);
     }
 
-    @PostMapping(
+    @PutMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    public ResponseEntity<OperandoResponseDto> addOperando(@Valid @RequestBody OperandoRequestDto requestDto) {
+    public ResponseEntity<OperacionResponseDto> realizarOperacion(@Valid @RequestBody OperacionRequestDto requestDto){
         sesionUtils.validateSesionId(requestDto.getSesionId());
 
-        Operando operando = modelMapper.map(requestDto, Operando.class);
-        operando = operandoService.addOperando(operando);
-
-        OperandoResponseDto responseDto = modelMapper.map(operando, OperandoResponseDto.class);
-
-        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+        Operacion operacion = modelMapper.map(requestDto, Operacion.class);
+        operacion = operacionService.realizarOperacion(operacion, requestDto.isAppendResult());
+        
+        OperacionResponseDto responseDto = modelMapper.map(operacion, OperacionResponseDto.class);
+        
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }
