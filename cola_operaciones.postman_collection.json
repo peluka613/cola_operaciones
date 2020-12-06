@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "eac44a59-8a08-414f-846b-1554863de19f",
+		"name": "cola_operaciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar sesiones",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/sesion-api/sesion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sesion-api",
+						"sesion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear sesion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/sesion-api/sesion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sesion-api",
+						"sesion"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar sesiones XML",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/sesion-api/sesion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sesion-api",
+						"sesion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Operandos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/operando-api/operando?sesionId=5e655bb6-b60f-4398-a4e1-d24b9961e442",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"operando-api",
+						"operando"
+					],
+					"query": [
+						{
+							"key": "sesionId",
+							"value": "5e655bb6-b60f-4398-a4e1-d24b9961e442"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar Operandos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sesionId\":\"5e655bb6-b60f-4398-a4e1-d24b9961e442\",\r\n    \"valor\":6\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/operando-api/operando",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"operando-api",
+						"operando"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Operandos XML",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/operando-api/operando?sesionId=7caf59b0-91de-4130-b95b-36ee182aab20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"operando-api",
+						"operando"
+					],
+					"query": [
+						{
+							"key": "sesionId",
+							"value": "7caf59b0-91de-4130-b95b-36ee182aab20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Realizar operacion",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sesionId\":\"5e655bb6-b60f-4398-a4e1-d24b9961e442\",\r\n    \"operacion\":\"potenciacion\",\r\n    \"appendResult\":true\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/operando-api/operacion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"operando-api",
+						"operacion"
+					],
+					"query": [
+						{
+							"key": "sesionId",
+							"value": "7caf59b0-91de-4130-b95b-36ee182aab20",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar operaciones",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/operando-api/operacion?sesionId=5e655bb6-b60f-4398-a4e1-d24b9961e442",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"operando-api",
+						"operacion"
+					],
+					"query": [
+						{
+							"key": "sesionId",
+							"value": "5e655bb6-b60f-4398-a4e1-d24b9961e442"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
