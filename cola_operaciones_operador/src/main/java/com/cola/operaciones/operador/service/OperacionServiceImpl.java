@@ -46,7 +46,7 @@ public class OperacionServiceImpl implements OperacionService {
     public Operacion realizarOperacion(Operacion operacion, boolean appendResult) {
         List<Operando> operandos = operandoService.findAllBySesionId(operacion.getSesionId());
 
-        synchronized (operandos) {
+        synchronized (this) {
             try {
                 final Queue<Operando> operandoQueue = new LinkedBlockingQueue<>(operandos);
                 Operando primerOperando = operandoQueue.remove();
@@ -58,7 +58,7 @@ public class OperacionServiceImpl implements OperacionService {
                 Operador operador = operadorFactory.crearOperador(operacion.getOperacion());
                 operacion.setResultado(operador.realizarOperacion(operacion.getPrimerOperando(), operacion.getSegundoOperando()));
 
-                if (Double.isInfinite(operacion.getResultado())){
+                if (Double.isInfinite(operacion.getResultado())) {
                     throw new ArithmeticException(zeroDivisionMessage);
                 }
 
