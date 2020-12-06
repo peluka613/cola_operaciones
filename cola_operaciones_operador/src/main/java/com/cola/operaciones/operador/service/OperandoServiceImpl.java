@@ -29,4 +29,9 @@ public class OperandoServiceImpl implements OperandoService {
     public List<Operando> findAll() {
         return operandoRepository.findAll();
     }
+
+    @Override
+    public List<Operando> findAllBySesionId(String sesionId) {
+        return operandoRepository.findAllBySesionId(sesionId);
+    }
 }

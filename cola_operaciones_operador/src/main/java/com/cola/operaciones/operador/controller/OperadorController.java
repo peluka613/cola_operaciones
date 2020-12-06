@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -47,10 +48,17 @@ public class OperadorController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    public ResponseEntity<List<OperandoRequestDto>> operandos() {
-        List<Operando> operandos = operandoService.findAll();
-        List<OperandoRequestDto> responseDtos = operandos.stream().map(
-                s -> modelMapper.map(s, OperandoRequestDto.class)
+    public ResponseEntity<List<OperandoResponseDto>> operandos(@RequestParam(required = false) String sesionId) {
+        List<Operando> operandos;
+        if (sesionId != null) {
+            validateSesionId(sesionId);
+            operandos = operandoService.findAllBySesionId(sesionId);
+        } else {
+            operandos = operandoService.findAll();
+        }
+
+        List<OperandoResponseDto> responseDtos = operandos.stream().map(
+                s -> modelMapper.map(s, OperandoResponseDto.class)
         ).collect(Collectors.toList());
 
         return new ResponseEntity<>(responseDtos, HttpStatus.OK);
@@ -61,9 +69,7 @@ public class OperadorController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<OperandoResponseDto> addOperando(@Valid @RequestBody OperandoRequestDto requestDto) {
-        if (sesionService.countBySesionId(requestDto.getSesionId()) == 0){
-            throw new BadSesionIdException(badSesionIdMessage);
-        }
+        validateSesionId(requestDto.getSesionId());
 
         Operando operando = modelMapper.map(requestDto, Operando.class);
         operando = operandoService.addOperando(operando);
@@ -71,5 +77,11 @@ public class OperadorController {
         OperandoResponseDto responseDto = modelMapper.map(operando, OperandoResponseDto.class);
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    private void validateSesionId(String sesionId) {
+        if (sesionService.countBySesionId(sesionId) == 0){
+            throw new BadSesionIdException(badSesionIdMessage);
+        }
     }
 }
