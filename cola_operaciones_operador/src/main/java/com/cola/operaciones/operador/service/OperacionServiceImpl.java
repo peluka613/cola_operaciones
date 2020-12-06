@@ -24,6 +24,12 @@ public class OperacionServiceImpl implements OperacionService {
     @Value("${exception.insufficient.operands}")
     private String insufficientOperandsMessage;
 
+    @Value("${exception.zero.division}")
+    private String zeroDivisionMessage;
+
+    @Value("${exception.arithmetic.generic}")
+    private String arithmeticExceptionMessage;
+
     @Autowired
     public OperacionServiceImpl(OperacionRepository operacionRepository, OperandoService operandoService, OperadorFactory operadorFactory) {
         this.operacionRepository = operacionRepository;
@@ -47,6 +53,10 @@ public class OperacionServiceImpl implements OperacionService {
                 Operador operador = operadorFactory.crearOperador(operacion.getOperacion());
                 operacion.setResultado(operador.realizarOperacion(operacion.getPrimerOperando(), operacion.getSegundoOperando()));
 
+                if (Double.isInfinite(operacion.getResultado())){
+                    throw new ArithmeticException(zeroDivisionMessage);
+                }
+
                 operacionRepository.save(operacion);
                 operandoService.delete(primerOperando);
                 operandoService.delete(segundoOperando);
@@ -58,6 +68,8 @@ public class OperacionServiceImpl implements OperacionService {
                 }
             } catch (NoSuchElementException e) {
                 throw new IllegalArgumentException(insufficientOperandsMessage, e);
+            } catch (ArithmeticException e) {
+                throw new IllegalArgumentException(arithmeticExceptionMessage + e.getMessage(), e);
             }
         }
 
